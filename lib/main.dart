@@ -18,8 +18,27 @@ String _urlApi2 =
 String _urlApi3 =
     'https://newsapi.org/v2/everything?q=apple&from=2019-09-12&to=2019-09-12&sortBy=popularity&apiKey=e3d3b881510f4522a3a0c19fc55489ca';
 
+
+// Private response variables
+List _response1;
+List _response2;
+List _response3;
+
+
 // App's main method
-void main() {
+void main() async{
+
+
+  _response1 = await fetchData(_urlApi1);
+  _response2 = await fetchData(_urlApi2);
+  _response3 = await fetchData(_urlApi3);
+
+  // Print test to see responses in console
+  for(int i = 0; i<_response1.length; i++){
+    print(_response1[i]['title']);
+  }
+
+
   runApp(new MaterialApp(
     home: new Categories(),
   ));
@@ -37,4 +56,11 @@ class Categories extends StatelessWidget {
       ),
     );
   }
+}
+
+
+// Method to fetch data from the API
+Future<List> fetchData(String urlApi)async {
+  http.Response response = await http.get(urlApi);
+  return (json.decode(response.body))['articles'];
 }
