@@ -1,11 +1,11 @@
 # my_news_app
 
 This is my flutter news API app, which consists of:
-#Dry code
-#Complete Indentation
-#Adequately vivid Comments
-#Very Object Oriented
-#Suitable Variable Naming
+# Dry code
+# Complete Indentation
+# Adequately vivid Comments
+# Very Object Oriented
+# Suitable Variable Naming
 
 I hope you all enjoy using this app.
 
