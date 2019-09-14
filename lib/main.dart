@@ -18,26 +18,16 @@ String _urlApi2 =
 String _urlApi3 =
     'https://newsapi.org/v2/everything?q=apple&from=2019-09-12&to=2019-09-12&sortBy=popularity&apiKey=e3d3b881510f4522a3a0c19fc55489ca';
 
-
 // Private response variables
 List _response1;
 List _response2;
 List _response3;
 
-
 // App's main method
-void main() async{
-
-
+void main() async {
   _response1 = await fetchData(_urlApi1);
   _response2 = await fetchData(_urlApi2);
   _response3 = await fetchData(_urlApi3);
-
-  // Print test to see responses in console
-  for(int i = 0; i<_response1.length; i++){
-    print(_response1[i]['title']);
-  }
-
 
   runApp(new MaterialApp(
     home: new Categories(),
@@ -54,13 +44,66 @@ class Categories extends StatelessWidget {
         // The App Logo comes HERE
         title: new Text('REALBOX'),
       ),
+      body: new Center(
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            // this button takes the user to Bitcoin Widget below(new page)
+            new RaisedButton(
+              padding: const EdgeInsets.all(10.0),
+              color: Colors.blue,
+              onPressed: () {
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) => new Bitcoin()));
+              },
+              child: new Text(
+                "Bitcoin News",
+                style: new TextStyle(
+                  fontFamily: "Verdana",
+                  fontSize: 20.0,
+                  color: Colors.white,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
 
+class Bitcoin extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+        appBar: new AppBar(
+          title: new Text("Bitcoin News"),
+          centerTitle: false,
+        ),
+        body: new Center(
+          child: new ListView.builder(
+            padding: const EdgeInsets.all(10.0),
+            itemCount: _response1.length,
+            itemBuilder: (BuildContext context, int position) {
+              return new ListTile(
+                title: new Text("${_response1[position]['title']}",
+                    style: new TextStyle(
+                        fontSize: 25.0, fontWeight: FontWeight.w900)),
+                subtitle: new Text("${_response1[position]['description']}",
+                    style: new TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.normal,
+                        fontStyle: FontStyle.italic,
+                        color: Colors.grey)),
+              );
+            },
+          ),
+        ));
+  }
+}
 
 // Method to fetch data from the API
-Future<List> fetchData(String urlApi)async {
+Future<List> fetchData(String urlApi) async {
   http.Response response = await http.get(urlApi);
   return (json.decode(response.body))['articles'];
 }
