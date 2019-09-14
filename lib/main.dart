@@ -29,16 +29,35 @@ void main() async {
   _responseBusiness = await fetchData(_urlApiBusiness);
   _responseTech = await fetchData(_urlApiTech);
 
-  runApp(new MaterialApp(
-    home: new Categories(),
-  ));
+  runApp(MyApp());
+
 }
 
-// stateless widget
-class Categories extends StatelessWidget {
+
+//Using Bloc
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // T ODO: implement build
+    return StreamBuilder(
+      stream: bloc.darkThemeEnabled,
+      initialData: false,
+      builder: (context, snapshot) => MaterialApp(
+          theme: snapshot.data ? ThemeData.dark() : ThemeData.light(),
+          home: HomePage(snapshot.data)),
+    );
+  }
+}
+
+
+
+// stateless widget
+class HomePage extends StatelessWidget {
+  final bool darkThemeEnabled;
+
+  HomePage(this.darkThemeEnabled);
+
+  @override
+  Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
           // The App Logo comes HERE
@@ -57,6 +76,19 @@ class Categories extends StatelessWidget {
             ),
           ] // action button
           ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            ListTile(
+              title: Text("Dark Theme"),
+              trailing: Switch(
+                value: darkThemeEnabled,
+                onChanged: bloc.changeTheme,
+              ),
+            )
+          ],
+        ),
+      ),
       body: new Center(
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -199,3 +231,13 @@ Future<List> fetchData(String urlApi) async {
   http.Response response = await http.get(urlApi);
   return (json.decode(response.body))['articles'];
 }
+
+
+
+class Bloc {
+  final _themeController = StreamController<bool>();
+  get changeTheme => _themeController.sink.add;
+  get darkThemeEnabled => _themeController.stream;
+}
+
+final bloc = Bloc();
