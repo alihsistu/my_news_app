@@ -6,6 +6,9 @@ import 'dart:convert';
 // for making http requests
 import 'package:http/http.dart' as http;
 
+
+
+
 // Apple news
 String _urlApiApple =
     'https://newsapi.org/v2/everything?q=apple&from=2019-09-12&to=2019-09-12&sortBy=popularity&apiKey=e3d3b881510f4522a3a0c19fc55489ca';
@@ -18,10 +21,15 @@ String _urlApiBusiness =
 String _urlApiTech =
     'https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=e3d3b881510f4522a3a0c19fc55489ca';
 
+
+
+
 // Private response variables
 List _responseApple;
 List _responseBusiness;
 List _responseTech;
+
+
 
 // App's main method
 void main() async {
@@ -164,11 +172,12 @@ class HomePage extends StatelessWidget {
   }
 }
 
-// -----------------Bitcoin------------------
+
+// News Widget for the Headlines
 class News extends StatelessWidget {
   final List response;
 
-  // constructor ( make response a required field )
+  // constructor ( to make response a required field )
   News({Key key, @required this.response}) : super(key: key);
 
   @override
@@ -191,6 +200,7 @@ class News extends StatelessWidget {
               final index = position ~/ 2;
 
               return new ListTile(
+                // ImageAsset(),
                 title: new Text(
                     "${response[index]['title']}", //position <-> index
                     style: new TextStyle(
@@ -209,6 +219,24 @@ class News extends StatelessWidget {
   }
 }
 
+
+// Method to fetch data from the API
+Future<List> fetchData(String urlApi) async {
+  http.Response response = await http.get(urlApi);
+  return (json.decode(response.body))['articles'];
+}
+
+class Bloc {
+  final _themeController = StreamController<bool>();
+  get changeTheme => _themeController.sink.add;
+  get darkThemeEnabled => _themeController.stream;
+}
+
+final bloc = Bloc();
+
+
+
+
 // Icons from MaterialIcons
 class Choice {
   const Choice({this.title, this.icon});
@@ -218,7 +246,7 @@ class Choice {
 }
 
 const List<Choice> choices = const <Choice>[
-  const Choice(title: 'Car', icon: Icons.dashboard),
+  const Choice(title: 'Dasboard', icon: Icons.dashboard),
   const Choice(title: 'Bicycle', icon: Icons.directions_bike),
   const Choice(title: 'Boat', icon: Icons.directions_boat),
   const Choice(title: 'Bus', icon: Icons.directions_bus),
@@ -226,18 +254,14 @@ const List<Choice> choices = const <Choice>[
   const Choice(title: 'Walk', icon: Icons.directions_walk),
 ];
 
-// Method to fetch data from the API
-Future<List> fetchData(String urlApi) async {
-  http.Response response = await http.get(urlApi);
-  return (json.decode(response.body))['articles'];
+// image
+class ImageAsset extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    AssetImage assetImage = AssetImage('assets/images/news.jpg');
+    Image image = Image(image: assetImage);
+    return Container(child: image,);
+     
+  }
+
 }
-
-
-
-class Bloc {
-  final _themeController = StreamController<bool>();
-  get changeTheme => _themeController.sink.add;
-  get darkThemeEnabled => _themeController.stream;
-}
-
-final bloc = Bloc();
