@@ -49,6 +49,41 @@ class Categories extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             // this button takes the user to Bitcoin Widget below(new page)
+            // Button 1
+            new RaisedButton(
+              padding: const EdgeInsets.all(10.0),
+              color: Colors.blue,
+              onPressed: () {
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) => new Bitcoin()));
+              },
+              child: new Text(
+                "Bitcoin News",
+                style: new TextStyle(
+                  fontFamily: "Verdana",
+                  fontSize: 20.0,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            // Button 2
+            new RaisedButton(
+              padding: const EdgeInsets.all(10.0),
+              color: Colors.blue,
+              onPressed: () {
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) => new Bitcoin()));
+              },
+              child: new Text(
+                "Bitcoin News",
+                style: new TextStyle(
+                  fontFamily: "Verdana",
+                  fontSize: 20.0,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            // Button 3
             new RaisedButton(
               padding: const EdgeInsets.all(10.0),
               color: Colors.blue,
@@ -80,16 +115,27 @@ class Bitcoin extends StatelessWidget {
           title: new Text("Bitcoin News"),
           centerTitle: false,
         ),
+
+
+
         body: new Center(
           child: new ListView.builder(
             padding: const EdgeInsets.all(10.0),
             itemCount: _response1.length,
             itemBuilder: (BuildContext context, int position) {
+
+              // Divider between 
+              if(position.isOdd) return  new Divider(
+                color: Colors.lightBlue, 
+              );
+              final index = position ~/2;
+
+
               return new ListTile(
-                title: new Text("${_response1[position]['title']}",
+                title: new Text("${_response1[index]['title']}",
                     style: new TextStyle(
                         fontSize: 25.0, fontWeight: FontWeight.w900)),
-                subtitle: new Text("${_response1[position]['description']}",
+                subtitle: new Text("${_response1[index]['description']}",
                     style: new TextStyle(
                         fontSize: 15.0,
                         fontWeight: FontWeight.normal,
