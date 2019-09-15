@@ -5,9 +5,8 @@ import 'dart:async';
 import 'dart:convert';
 // for making http requests
 import 'package:http/http.dart' as http;
-
-
-
+// Cool Button Widget
+import 'cool_button.dart';
 
 // Apple news
 String _urlApiApple =
@@ -21,15 +20,10 @@ String _urlApiBusiness =
 String _urlApiTech =
     'https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=e3d3b881510f4522a3a0c19fc55489ca';
 
-
-
-
 // Private response variables
 List _responseApple;
 List _responseBusiness;
 List _responseTech;
-
-
 
 // App's main method
 void main() async {
@@ -38,9 +32,7 @@ void main() async {
   _responseTech = await fetchData(_urlApiTech);
 
   runApp(MyApp());
-
 }
-
 
 //Using Bloc
 class MyApp extends StatelessWidget {
@@ -55,8 +47,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
 
 // stateless widget
 class HomePage extends StatelessWidget {
@@ -101,7 +91,7 @@ class HomePage extends StatelessWidget {
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            // this button takes the user to Bitcoin Widget below(new page)
+            // this button takes the user to News Widget below(new page)
             // 1st Button
             new RaisedButton(
               padding: const EdgeInsets.all(10.0),
@@ -172,7 +162,6 @@ class HomePage extends StatelessWidget {
   }
 }
 
-
 // News Widget for the Headlines
 class News extends StatelessWidget {
   final List response;
@@ -201,6 +190,10 @@ class News extends StatelessWidget {
 
               return new ListTile(
                 // ImageAsset(),
+                // if(_coords == null) {
+                //   return Image.asset('assets/product.jpg');
+                //    }
+                leading: response[index]['urlToImage'] == null ? Image.asset('news.jpg') : Image.network(response[index]['urlToImage']),
                 title: new Text(
                     "${response[index]['title']}", //position <-> index
                     style: new TextStyle(
@@ -219,7 +212,6 @@ class News extends StatelessWidget {
   }
 }
 
-
 // Method to fetch data from the API
 Future<List> fetchData(String urlApi) async {
   http.Response response = await http.get(urlApi);
@@ -233,9 +225,6 @@ class Bloc {
 }
 
 final bloc = Bloc();
-
-
-
 
 // Icons from MaterialIcons
 class Choice {
@@ -260,8 +249,8 @@ class ImageAsset extends StatelessWidget {
   Widget build(BuildContext context) {
     AssetImage assetImage = AssetImage('assets/images/news.jpg');
     Image image = Image(image: assetImage);
-    return Container(child: image,);
-     
+    return Container(
+      child: image,
+    );
   }
-
 }
