@@ -6,6 +6,7 @@ This is my flutter news API app, which consists of:
 - Adequately vivid Comments
 - Very Object Oriented
 - Suitable Variable Naming
+- Night Mode
 
 I hope you all enjoy using this app.
 
