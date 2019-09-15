@@ -6,7 +6,8 @@ This is my flutter news API app, which consists of:
 - Adequately vivid Comments
 - Very Object Oriented
 - Suitable Variable Naming
-- Night Mode
+- Fetch News Containing Image, Title, Description
+- Night Mode for Whole App for a more convinient experience using the app at night.
 
 I hope you all enjoy using this app.
 
