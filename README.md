@@ -7,7 +7,7 @@ This is my flutter news API app, which consists of:
 - Very Object Oriented
 - Suitable Variable Naming
 - Fetch News Containing Image, Title, Description
-- Night Mode for Whole App for a more convinient experience using the app at night.
+- Night Mode for Whole App for Saving Battery and Looking Cool.
 
 I hope you all enjoy using this app.
 
